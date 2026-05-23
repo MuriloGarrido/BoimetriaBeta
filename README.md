@@ -5,7 +5,7 @@
 **Identificação biométrica de bovinos pelo focinho — 100% no dispositivo, sem internet.**
 
 [![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
-[![.NET MAUI](https://img.shields.io/badge/.NET%20MAUI-Android%20%7C%20iOS%20%7C%20Windows%20%7C%20macOS-512BD4?logo=dotnet&logoColor=white)](https://learn.microsoft.com/dotnet/maui/)
+[![.NET MAUI](https://img.shields.io/badge/.NET%20MAUI-Android-512BD4?logo=dotnet&logoColor=white)](https://learn.microsoft.com/dotnet/maui/)
 [![ONNX Runtime](https://img.shields.io/badge/ONNX%20Runtime-on--device-005CED?logo=onnx&logoColor=white)](https://onnxruntime.ai/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -13,26 +13,32 @@
 
 ---
 
+## ⚠️ Status: Prova de Conceito (PoC) Beta
+
+Este projeto é uma **prova de conceito** para validar a integração de:
+- **YOLO** (detecção de objetos) em Android
+- **MAUI** (.NET cross-platform)
+- **ONNX Runtime** (inferência on-device)
+
+**Não é um produto pronto para produção.** Use para fins educacionais, pesquisa e experimentação.
+
+---
+
 ## 📖 Sobre o projeto
 
 O focinho de um bovino é tão único quanto a impressão digital de uma pessoa: o padrão de sulcos e cristas
-não se repete entre animais. **Boimetria** transforma essa característica em um identificador biométrico
-prático para o produtor rural — basta apontar a câmera do celular para o focinho do boi.
+não se repete entre animais. **Boimetria** explora essa característica como base para um identificador biométrico
+— basta apontar a câmera do celular para o focinho do boi.
 
-A aplicação roda **inteiramente no dispositivo**, usando um modelo de visão computacional (detecção de
-objetos no estilo YOLO, exportado para ONNX). Não há servidor, não há nuvem e **não é necessária conexão
-com a internet** — um requisito-chave para uso em campo, onde a cobertura de rede costuma ser ruim ou
-inexistente.
+A aplicação roda **inteiramente no dispositivo Android**, usando um modelo YOLO exportado para ONNX e inferência
+local com **ONNX Runtime**. Não há servidor, não há nuvem e **não é necessária conexão com a internet**.
 
-> **Status:** beta funcional. O reconhecimento do focinho está operacional; módulos de manejo e relatórios
-> estão sinalizados na interface como evolução planejada (ver [Roadmap](#-roadmap)).
+### Por que este PoC é interessante
 
-### Por que este projeto é interessante
-
-- **IA embarcada (edge AI):** inferência de rede neural local, sem latência de rede e com privacidade total dos dados.
-- **App multiplataforma real:** um único código-base C# rodando em Android, iOS, Windows e macOS via .NET MAUI.
-- **Pensado para o usuário final:** linguagem da interface no tom do produtor rural, fluxo de preparação simples e
-  tratamento de erros amigável ("Não achei o boi, tenta de mais perto com boa luz").
+- **IA embarcada (edge AI):** validação prática de YOLO + ONNX Runtime rodando localmente em Android, sem latência de rede.
+- **MAUI em produção:** demonstração real de um único código C# compilado para Android via .NET MAUI, com acesso aos APIs nativos.
+- **Prototipagem rápida:** stack moderno e estruturado (MVVM + DI) para experimentos com visão computacional em mobile.
+- **Offline-first:** requisito crítico para campo onde não há cobertura de rede.
 
 ---
 
@@ -98,11 +104,17 @@ claramente UI, lógica de apresentação e serviços de domínio.
 - **Componentes:** [CommunityToolkit.Maui](https://learn.microsoft.com/dotnet/communitytoolkit/maui/)
 - **Inferência de IA:** [Microsoft.ML.OnnxRuntime](https://onnxruntime.ai/)
 - **Processamento de imagem:** [SkiaSharp](https://github.com/mono/SkiaSharp)
-- **Plataformas-alvo:** Android · iOS · Windows · macOS (Mac Catalyst)
+- **Plataforma-alvo:** Android (API 29+)
+
+## ⚡ Limitações (Beta/PoC)
+
+- O modelo YOLO é uma prova de conceito e pode ter variações de precisão em diferentes condições de luz e ângulos
+- Não há banco de dados persistente de animais (módulos de manejo são estrutura UI apenas)
+- Performance depende do dispositivo Android (número de núcleos, RAM disponível)
+- Não há versionamento ou atualização automática do modelo
+- Interface é em português (português brasileiro)
 
 ---
-
-## 🚀 Como rodar
 
 ### Pré-requisitos
 
@@ -111,8 +123,8 @@ claramente UI, lógica de apresentação e serviços de domínio.
   ```bash
   dotnet workload install maui
   ```
-- Para Android: Android SDK / emulador (via Visual Studio 2022+ ou Android Studio).
-  Para iOS/macOS: um host macOS com Xcode.
+- **Android SDK** / emulador configurado (via Visual Studio 2022+ ou Android Studio)
+- Um dispositivo Android conectado ou emulador rodando (Android API 29 ou superior)
 
 ### Build e execução
 
@@ -126,23 +138,26 @@ dotnet restore
 
 # Rodar no Android (emulador/dispositivo conectado)
 dotnet build BoimetriaBeta/BoimetriaBeta.csproj -t:Run -f net10.0-android
-
-# Ou no Windows
-dotnet build BoimetriaBeta/BoimetriaBeta.csproj -t:Run -f net10.0-windows10.0.19041.0
 ```
 
-> Também é possível abrir `BoimetriaBeta.slnx` diretamente no Visual Studio 2022+ e selecionar o alvo desejado.
+Também é possível abrir `BoimetriaBeta.slnx` diretamente no Visual Studio 2022+ e:
+1. Selecionar **Android Emulator** ou **Android Device** na barra de ferramentas
+2. Pressionar **F5** (Debug) ou **Ctrl+F5** (Release)
 
 ### Preparando o modelo
 
 O peso da rede neural (`.onnx`) **não é versionado** no repositório (ver `.gitignore`). Para usar o app:
 
-1. Abra o app e vá em **Ajustes**.
-2. Toque em **Carregar arquivo** e selecione o modelo `.onnx`.
-3. O arquivo é copiado para o armazenamento local do app e fica disponível offline.
+1. Abra o app no dispositivo/emulador e navegue até **Ajustes**.
+2. Toque em **Carregar arquivo** e selecione o modelo `.onnx` da galeria do dispositivo.
+3. O arquivo é copiado para o armazenamento privado do app e fica disponível offline.
 
-O modelo esperado é um detector de objetos com entrada `640×640` e saída no formato
-`[1, N, ≥6]` (`x1, y1, x2, y2, confiança, classe`).
+**Requisitos do modelo:**
+- Entrada: tensor `640×640` (imagem RGB)
+- Saída: formato YOLO-padrão `[1, N, ≥6]` onde cada detecção contém:
+  - `x1, y1, x2, y2` — coordenadas do bounding box
+  - `confiança` — score de detecção
+  - `classe` — índice da classe (0 = focinho de bovino esperado)
 
 ---
 
@@ -156,25 +171,82 @@ BoimetriaBeta/
 │   ├── Services/                   # ONNX, imagem, picker, settings, diálogos (+ interfaces)
 │   ├── ViewModels/                 # Lógica de apresentação (MVVM)
 │   ├── Views/                      # Telas XAML
-│   ├── Platforms/                  # Código específico de Android/iOS/Windows/macOS
+│   ├── Platforms/
+│   │   └── Android/                # Código específico do Android
 │   ├── Resources/                  # Ícones, fontes, estilos, splash
 │   ├── AppShell.xaml               # Navegação (TabBar)
-│   └── MauiProgram.cs              # Bootstrap + injeção de dependência
+│   ├── MauiProgram.cs              # Bootstrap + injeção de dependência
+│   └── BoimetriaBeta.csproj        # Configuração do projeto
 ├── .gitignore
 ├── LICENSE
 └── README.md
 ```
 
+### Pastas principais
+
+- **Models/** — Classes de domínio (`DetectionResult`, `BoundingBox`)
+- **Services/** — Interfaces e implementações:
+  - `IModelService` — carregamento e inferência ONNX
+  - `IImageProcessingService` — redimensionamento, normalização, desenho de caixas
+  - `IImagePickerService` — captura e seleção de fotos
+  - `ISettingsService` — persistência de configurações
+  - `IDialogService` — exibição de alertas/diálogos
+- **ViewModels/** — Lógica de apresentação com binding bidirecional
+- **Views/** — Páginas XAML (`MainPage`, `IdentificationPage`, `ReportsPage`, `SettingsPage`)
+- **Platforms/Android/** — Permissões, integrações Android específicas
+
 ---
 
-## 🗺️ Roadmap
+## 🔧 Desenvolvimento
 
-- [x] Identificação do focinho por IA on-device
+### Permissões Android
+
+O app requer as seguintes permissões no `AndroidManifest.xml`:
+
+```xml
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+```
+
+Em Android 6.0+, o app solicita permissões em tempo de execução via `MAUI Permissions API`.
+
+### Inferência ONNX em background
+
+A detecção roda em uma thread de background para não congelar a UI:
+
+```csharp
+var result = await Task.Run(() => modelService.Detect(image));
+```
+
+### Otimizações para Android
+
+- **Grafo ONNX:** otimizado com `SessionOptions.GraphOptimizationLevel = GraphOptimizationLevel.ORT_ENABLE_ALL`
+- **Threading:** ajustado ao número de núcleos (`Environment.ProcessorCount`)
+- **Memória:** imagens e tensores são descartados após uso (`Dispose()`)
+
+---
+
+## 🗺️ Roadmap (Planejado)
+
+> ⚠️ Itens abaixo são apenas planejamento. A versão atual é PoC focado em YOLO + MAUI + ONNX Runtime.
+
+- [x] Detecção YOLO com ONNX Runtime em Android
 - [x] Tela de preparação do sistema (carregar modelo)
 - [ ] Cadastro e *matching* de animais (associar focinho a um indivíduo)
 - [ ] Módulos de manejo (vacinação, pesagem, histórico)
 - [ ] Relatórios por período
 - [ ] Sincronização opcional com a nuvem
+
+---
+
+## 🤝 Contribuindo
+
+Sugestões e PRs são bem-vindas! Antes de submeter:
+
+1. Mantenha o código alinhado com o padrão MVVM e DI existente
+2. Teste em um dispositivo Android real ou emulador
+3. Documente mudanças significativas na UI ou serviços
 
 ---
 
