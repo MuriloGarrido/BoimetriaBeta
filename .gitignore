@@ -1,0 +1,109 @@
+# ---------------------------------------------
+# .NET / .NET MAUI / Visual Studio
+# ---------------------------------------------
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Dd]ebug/
+[Rr]elease/
+[Ll]og/
+[Ll]ogs/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+build/
+bld/
+artifacts/
+
+# Visual Studio / Rider / VS Code workspace files
+.vs/
+.vscode/
+.idea/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.sln.docstates
+*.DotSettings.user
+
+# Build / restore caches
+project.lock.json
+project.assets.json
+*.nuget.props
+*.nuget.targets
+*.nuget.dgspec.json
+.nuget/
+packages/
+!packages/build/
+
+# Roslyn / MSBuild
+*.binlog
+*.tlog
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+TestResults/
+
+# ---------------------------------------------
+# .NET MAUI / mobile specific
+# ---------------------------------------------
+
+# Android
+*.keystore
+*.jks
+!2*.keystore
+[Aa]ndroid/bin/
+[Aa]ndroid/obj/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.idsig
+
+# iOS / Mac
+*.ipa
+*.dSYM/
+*.dSYM.zip
+Pods/
+*.xcuserstate
+DerivedData/
+
+# Generated app resources / publishing
+*.appx
+*.appxbundle
+*.appxupload
+*.msix
+*.msixbundle
+AppPackages/
+BundleArtifacts/
+*.pfx
+*.publishsettings
+
+# ---------------------------------------------
+# Machine learning model weights (load at runtime)
+# ---------------------------------------------
+*.onnx
+
+# ---------------------------------------------
+# OS noise
+# ---------------------------------------------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+*~
+*.swp
+*.bak
+*.tmp

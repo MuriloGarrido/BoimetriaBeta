@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BoimetriaBeta.ViewModels"
+             x:Class="BoimetriaBeta.Views.ReportsPage"
+             x:DataType="vm:ReportsViewModel"
+             Title="Relatórios"
+             BackgroundColor="{StaticResource BackgroundPrimary}">
+
+    <Shell.TitleView>
+        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+            <Label Text="Relatórios"
+                   FontFamily="OpenSansSemibold"
+                   FontAttributes="Bold"
+                   FontSize="17"
+                   TextColor="{StaticResource TextPrimary}"
+                   VerticalOptions="Center" />
+            <Border Style="{StaticResource BetaChip}" VerticalOptions="Center">
+                <Label Text="BETA"
+                       FontFamily="OpenSansSemibold"
+                       FontSize="9"
+                       FontAttributes="Bold"
+                       CharacterSpacing="1"
+                       TextColor="White" />
+            </Border>
+        </HorizontalStackLayout>
+    </Shell.TitleView>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,8,20,32" Spacing="22">
+
+            <!-- Header -->
+            <VerticalStackLayout Spacing="4">
+                <Label Text="ACOMPANHAMENTO DO MANEJO"
+                       Style="{StaticResource SectionLabel}"
+                       TextColor="{StaticResource Accent}" />
+                <Label Text="Como tá o rebanho?"
+                       FontFamily="OpenSansSemibold"
+                       FontAttributes="Bold"
+                       FontSize="22"
+                       CharacterSpacing="-0.5"
+                       TextColor="{StaticResource TextPrimary}" />
+                <Label Text="Veja os relatórios do manejo: vacinação, pesagem, tratamentos e movimentação dos animais."
+                       Style="{StaticResource SubtitleLabel}" />
+            </VerticalStackLayout>
+
+            <!-- Filtro de período -->
+            <Border Style="{StaticResource MutedCard}" Padding="6">
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="4">
+                    <Border Grid.Column="0"
+                            BackgroundColor="Transparent"
+                            StrokeShape="RoundRectangle 12"
+                            Stroke="Transparent"
+                            Padding="0">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectRangeCommand}" CommandParameter="Esta semana" />
+                        </Border.GestureRecognizers>
+                        <Label Text="Esta semana"
+                               FontFamily="OpenSansSemibold"
+                               FontAttributes="Bold"
+                               FontSize="13"
+                               TextColor="{StaticResource TextPrimary}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Padding="0,12" />
+                    </Border>
+                    <Border Grid.Column="1"
+                            BackgroundColor="{StaticResource Surface}"
+                            StrokeShape="RoundRectangle 12"
+                            Stroke="Transparent"
+                            Padding="0">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectRangeCommand}" CommandParameter="Este mês" />
+                        </Border.GestureRecognizers>
+                        <Label Text="Este mês"
+                               FontFamily="OpenSansSemibold"
+                               FontAttributes="Bold"
+                               FontSize="13"
+                               TextColor="{StaticResource TextPrimary}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Padding="0,12" />
+                    </Border>
+                    <Border Grid.Column="2"
+                            BackgroundColor="Transparent"
+                            StrokeShape="RoundRectangle 12"
+                            Stroke="Transparent"
+                            Padding="0">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectRangeCommand}" CommandParameter="Este ano" />
+                        </Border.GestureRecognizers>
+                        <Label Text="Este ano"
+                               FontSize="13"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Padding="0,12" />
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Big number cards -->
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                <Border Grid.Column="0" Style="{StaticResource BorderedCard}" Padding="14">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding ManagementsCount}" Style="{StaticResource MetricValue}" />
+                        <Label Text="Manejos feitos" Style="{StaticResource MetricLabel}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource BorderedCard}" Padding="14">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding AnimalsCount}" Style="{StaticResource MetricValue}" />
+                        <Label Text="Animais atendidos" Style="{StaticResource MetricLabel}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="2" Style="{StaticResource BorderedCard}" Padding="14">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding PendingCount}" Style="{StaticResource MetricValue}" />
+                        <Label Text="Pendências" Style="{StaticResource MetricLabel}" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Reports list -->
+            <VerticalStackLayout Spacing="10">
+                <Label Text="RELATÓRIOS DE MANEJO" Style="{StaticResource SectionLabel}" />
+                <Border Style="{StaticResource BorderedCard}" Padding="6">
+                    <VerticalStackLayout Spacing="0">
+
+                        <Grid Padding="12" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SoonCommand}" CommandParameter="Vacinação" />
+                            </Grid.GestureRecognizers>
+                            <Border Grid.Column="0" Style="{StaticResource IconBadge}">
+                                <Label Text="💉" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Vacinação"
+                                       FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="14"
+                                       TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="Quem tomou, quem falta e o que vence"
+                                       FontSize="11" TextColor="{StaticResource TextSecondary}" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="2" Style="{StaticResource ComingSoonChip}" VerticalOptions="Center">
+                                <Label Text="EM BREVE"
+                                       FontFamily="OpenSansSemibold" FontSize="9" FontAttributes="Bold"
+                                       CharacterSpacing="2" TextColor="{StaticResource TextSecondary}" />
+                            </Border>
+                        </Grid>
+                        <BoxView HeightRequest="1" Color="{StaticResource Divider}" Margin="12,0" />
+
+                        <Grid Padding="12" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SoonCommand}" CommandParameter="Pesagem" />
+                            </Grid.GestureRecognizers>
+                            <Border Grid.Column="0" Style="{StaticResource IconBadge}">
+                                <Label Text="⚖️" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Pesagem"
+                                       FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="14"
+                                       TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="Ganho de peso por animal e por lote"
+                                       FontSize="11" TextColor="{StaticResource TextSecondary}" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="2" Style="{StaticResource ComingSoonChip}" VerticalOptions="Center">
+                                <Label Text="EM BREVE"
+                                       FontFamily="OpenSansSemibold" FontSize="9" FontAttributes="Bold"
+                                       CharacterSpacing="2" TextColor="{StaticResource TextSecondary}" />
+                            </Border>
+                        </Grid>
+                        <BoxView HeightRequest="1" Color="{StaticResource Divider}" Margin="12,0" />
+
+                        <Grid Padding="12" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SoonCommand}" CommandParameter="Tratamentos" />
+                            </Grid.GestureRecognizers>
+                            <Border Grid.Column="0" Style="{StaticResource IconBadge}">
+                                <Label Text="💊" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Tratamentos"
+                                       FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="14"
+                                       TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="Doenças, medicamentos e carência"
+                                       FontSize="11" TextColor="{StaticResource TextSecondary}" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="2" Style="{StaticResource ComingSoonChip}" VerticalOptions="Center">
+                                <Label Text="EM BREVE"
+                                       FontFamily="OpenSansSemibold" FontSize="9" FontAttributes="Bold"
+                                       CharacterSpacing="2" TextColor="{StaticResource TextSecondary}" />
+                            </Border>
+                        </Grid>
+                        <BoxView HeightRequest="1" Color="{StaticResource Divider}" Margin="12,0" />
+
+                        <Grid Padding="12" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SoonCommand}" CommandParameter="Movimentação" />
+                            </Grid.GestureRecognizers>
+                            <Border Grid.Column="0" Style="{StaticResource IconBadge}">
+                                <Label Text="🚛" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Movimentação"
+                                       FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="14"
+                                       TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="Entradas, saídas e troca de lote"
+                                       FontSize="11" TextColor="{StaticResource TextSecondary}" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="2" Style="{StaticResource ComingSoonChip}" VerticalOptions="Center">
+                                <Label Text="EM BREVE"
+                                       FontFamily="OpenSansSemibold" FontSize="9" FontAttributes="Bold"
+                                       CharacterSpacing="2" TextColor="{StaticResource TextSecondary}" />
+                            </Border>
+                        </Grid>
+                        <BoxView HeightRequest="1" Color="{StaticResource Divider}" Margin="12,0" />
+
+                        <Grid Padding="12" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SoonCommand}" CommandParameter="Reprodução" />
+                            </Grid.GestureRecognizers>
+                            <Border Grid.Column="0" Style="{StaticResource IconBadge}">
+                                <Label Text="🍼" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Reprodução"
+                                       FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="14"
+                                       TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="Cobertura, parto e prenhez do rebanho"
+                                       FontSize="11" TextColor="{StaticResource TextSecondary}" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="2" Style="{StaticResource ComingSoonChip}" VerticalOptions="Center">
+                                <Label Text="EM BREVE"
+                                       FontFamily="OpenSansSemibold" FontSize="9" FontAttributes="Bold"
+                                       CharacterSpacing="2" TextColor="{StaticResource TextSecondary}" />
+                            </Border>
+                        </Grid>
+                        <BoxView HeightRequest="1" Color="{StaticResource Divider}" Margin="12,0" />
+
+                        <Grid Padding="12" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SoonCommand}" CommandParameter="Ficha do animal" />
+                            </Grid.GestureRecognizers>
+                            <Border Grid.Column="0" Style="{StaticResource IconBadge}">
+                                <Label Text="📋" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Ficha do animal"
+                                       FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="14"
+                                       TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="Tudo que aconteceu com um boi específico"
+                                       FontSize="11" TextColor="{StaticResource TextSecondary}" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="2" Style="{StaticResource ComingSoonChip}" VerticalOptions="Center">
+                                <Label Text="EM BREVE"
+                                       FontFamily="OpenSansSemibold" FontSize="9" FontAttributes="Bold"
+                                       CharacterSpacing="2" TextColor="{StaticResource TextSecondary}" />
+                            </Border>
+                        </Grid>
+                        <BoxView HeightRequest="1" Color="{StaticResource Divider}" Margin="12,0" />
+
+                        <Grid Padding="12" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SoonCommand}" CommandParameter="Mandar pro patrão" />
+                            </Grid.GestureRecognizers>
+                            <Border Grid.Column="0" Style="{StaticResource IconBadge}">
+                                <Label Text="📲" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Mandar pro patrão"
+                                       FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="14"
+                                       TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="Envia o resumo do manejo no WhatsApp"
+                                       FontSize="11" TextColor="{StaticResource TextSecondary}" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="2" Style="{StaticResource ComingSoonChip}" VerticalOptions="Center">
+                                <Label Text="EM BREVE"
+                                       FontFamily="OpenSansSemibold" FontSize="9" FontAttributes="Bold"
+                                       CharacterSpacing="2" TextColor="{StaticResource TextSecondary}" />
+                            </Border>
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Empty footer note -->
+            <Border Style="{StaticResource MutedCard}" Padding="18">
+                <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                    <Label Text="Os relatórios vão se preencher à medida que você for fazendo o manejo dos boi pelo app."
+                           FontSize="12"
+                           HorizontalTextAlignment="Center"
+                           TextColor="{StaticResource TextSecondary}" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

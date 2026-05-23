@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="BoimetriaBeta.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:BoimetriaBeta.Views"
+    Title="Boimetria"
+    BackgroundColor="{StaticResource BackgroundPrimary}"
+    Shell.FlyoutBehavior="Disabled">
+
+    <Shell.Resources>
+        <Style TargetType="Shell" ApplyToDerivedTypes="True">
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource BackgroundPrimary}" />
+            <Setter Property="Shell.ForegroundColor" Value="{StaticResource TextPrimary}" />
+            <Setter Property="Shell.TitleColor" Value="{StaticResource TextPrimary}" />
+            <Setter Property="Shell.DisabledColor" Value="{StaticResource Gray300}" />
+            <Setter Property="Shell.UnselectedColor" Value="{StaticResource TextSecondary}" />
+            <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource BackgroundPrimary}" />
+            <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Accent}" />
+            <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource Accent}" />
+            <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource TextSecondary}" />
+            <Setter Property="Shell.NavBarHasShadow" Value="False" />
+        </Style>
+    </Shell.Resources>
+
+    <TabBar Route="main">
+        <ShellContent Title="Início"
+                      Route="dashboard"
+                      ContentTemplate="{DataTemplate views:MainPage}" />
+        <ShellContent Title="Identificar"
+                      Route="identificar"
+                      ContentTemplate="{DataTemplate views:IdentificationPage}" />
+        <ShellContent Title="Relatórios"
+                      Route="relatorios"
+                      ContentTemplate="{DataTemplate views:ReportsPage}" />
+        <ShellContent Title="Ajustes"
+                      Route="ajustes"
+                      ContentTemplate="{DataTemplate views:SettingsPage}" />
+    </TabBar>
+
+</Shell>

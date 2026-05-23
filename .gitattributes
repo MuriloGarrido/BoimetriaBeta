@@ -1,0 +1,25 @@
+# Normaliza fins de linha automaticamente
+* text=auto
+
+# Código-fonte e configs (LF no repositório)
+*.cs        text diff=csharp
+*.xaml      text
+*.csproj    text
+*.slnx      text
+*.json      text
+*.xml       text
+*.manifest  text
+*.plist     text
+*.md        text
+*.svg       text
+
+# Arquivos binários (nunca normalizar)
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.ttf       binary
+*.otf       binary
+*.onnx      binary
+*.keystore  binary
+*.jks       binary

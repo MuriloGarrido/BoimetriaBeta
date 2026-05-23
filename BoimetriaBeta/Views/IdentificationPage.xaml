@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BoimetriaBeta.ViewModels"
+             x:Class="BoimetriaBeta.Views.IdentificationPage"
+             x:DataType="vm:IdentificationViewModel"
+             Title="Identificar"
+             BackgroundColor="{StaticResource BackgroundPrimary}">
+
+    <Shell.TitleView>
+        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+            <Label Text="Identificar"
+                   FontFamily="OpenSansSemibold"
+                   FontAttributes="Bold"
+                   FontSize="17"
+                   TextColor="{StaticResource TextPrimary}"
+                   VerticalOptions="Center" />
+            <Border Style="{StaticResource BetaChip}" VerticalOptions="Center">
+                <Label Text="BETA"
+                       FontFamily="OpenSansSemibold"
+                       FontSize="9"
+                       FontAttributes="Bold"
+                       CharacterSpacing="1"
+                       TextColor="White" />
+            </Border>
+        </HorizontalStackLayout>
+    </Shell.TitleView>
+
+    <Grid>
+
+        <ScrollView>
+            <VerticalStackLayout Padding="20,8,20,32" Spacing="20">
+
+                <!-- Header -->
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="PASSO 1 · A FOTO"
+                           Style="{StaticResource SectionLabel}"
+                           TextColor="{StaticResource Accent}" />
+                    <Label Text="De onde vem a foto?"
+                           FontFamily="OpenSansSemibold"
+                           FontAttributes="Bold"
+                           FontSize="22"
+                           CharacterSpacing="-0.5"
+                           TextColor="{StaticResource TextPrimary}" />
+                    <Label Text="Aproxime do focinho do boi, com luz boa e sem o bicho se mexendo muito."
+                           Style="{StaticResource SubtitleLabel}" />
+                </VerticalStackLayout>
+
+                <!-- Source actions -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <Border Grid.Column="0" Style="{StaticResource Card}" Padding="0" HeightRequest="130">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CaptureCommand}" />
+                        </Border.GestureRecognizers>
+                        <Grid>
+                            <Grid.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#1B5E20" Offset="0" />
+                                    <GradientStop Color="#2E7D32" Offset="1" />
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                            <VerticalStackLayout VerticalOptions="Center" Spacing="8" Padding="16">
+                                <Border BackgroundColor="#0E3A12"
+                                        StrokeShape="RoundRectangle 12"
+                                        Stroke="Transparent"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Start">
+                                    <Label Text="📷" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="Tirar foto"
+                                       FontFamily="OpenSansSemibold"
+                                       FontAttributes="Bold"
+                                       FontSize="17"
+                                       TextColor="White" />
+                                <Label Text="Usa a câmera do celular"
+                                       FontSize="11"
+                                       TextColor="#CDE5CF" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="1" Style="{StaticResource BorderedCard}" Padding="0" HeightRequest="130">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding PickCommand}" />
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout VerticalOptions="Center" Spacing="8" Padding="16">
+                            <Border BackgroundColor="{StaticResource AccentSoft}"
+                                    StrokeShape="RoundRectangle 12"
+                                    Stroke="Transparent"
+                                    WidthRequest="40"
+                                    HeightRequest="40"
+                                    HorizontalOptions="Start">
+                                <Label Text="🖼" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="Do celular"
+                                   FontFamily="OpenSansSemibold"
+                                   FontAttributes="Bold"
+                                   FontSize="17"
+                                   TextColor="{StaticResource TextPrimary}" />
+                            <Label Text="Escolhe uma foto já tirada"
+                                   FontSize="11"
+                                   TextColor="{StaticResource TextSecondary}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Dica -->
+                <Border Style="{StaticResource MutedCard}" Padding="14"
+                        IsVisible="{Binding HasResult, Converter={StaticResource InvertedBoolConverter}}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Label Grid.Column="0" Text="💡" FontSize="22" VerticalOptions="Center" />
+                        <Label Grid.Column="1"
+                               Text="Dica: tira a foto do focinho de pertinho. Evita sombra e movimento que dá pra reconhecer melhor."
+                               FontSize="12"
+                               TextColor="{StaticResource TextSecondary}"
+                               VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Empty state -->
+                <Border Style="{StaticResource BorderedCard}"
+                        Padding="24"
+                        IsVisible="{Binding HasResult, Converter={StaticResource InvertedBoolConverter}}">
+                    <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                        <Border BackgroundColor="{StaticResource AccentSoft}"
+                                StrokeShape="RoundRectangle 999"
+                                WidthRequest="56"
+                                HeightRequest="56"
+                                HorizontalOptions="Center">
+                            <Label Text="🐂"
+                                   FontSize="26"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+                        <Label Text="Pronto pra começar"
+                               FontFamily="OpenSansSemibold"
+                               FontAttributes="Bold"
+                               FontSize="15"
+                               HorizontalTextAlignment="Center"
+                               TextColor="{StaticResource TextPrimary}" />
+                        <Label Text="{Binding EmptyStateMessage}"
+                               FontSize="12"
+                               HorizontalTextAlignment="Center"
+                               TextColor="{StaticResource TextSecondary}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Result section -->
+                <VerticalStackLayout Spacing="14"
+                                     IsVisible="{Binding HasResult}">
+
+                    <Label Text="PASSO 2 · RESULTADO"
+                           Style="{StaticResource SectionLabel}"
+                           TextColor="{StaticResource Accent}" />
+
+                    <!-- Annotated image -->
+                    <Border Style="{StaticResource Card}" Padding="0">
+                        <Grid>
+                            <Image Source="{Binding AnnotatedImage}"
+                                   Aspect="AspectFit"
+                                   HeightRequest="300"
+                                   BackgroundColor="{StaticResource BackgroundSecondary}" />
+                            <Border BackgroundColor="{StaticResource Accent}"
+                                    StrokeShape="RoundRectangle 999"
+                                    Padding="10,5"
+                                    Margin="14"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="Start">
+                                <Label Text="BOI ENCONTRADO"
+                                       FontFamily="OpenSansSemibold"
+                                       FontSize="9"
+                                       FontAttributes="Bold"
+                                       CharacterSpacing="2"
+                                       TextColor="White" />
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!-- Confidence metric -->
+                    <Border Style="{StaticResource Card}">
+                        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
+                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0"
+                                       Text="O quanto eu tenho certeza"
+                                       FontFamily="OpenSansSemibold"
+                                       FontAttributes="Bold"
+                                       FontSize="14"
+                                       TextColor="{StaticResource TextPrimary}"
+                                       VerticalOptions="Center" />
+                                <Label Grid.Column="1"
+                                       Text="{Binding ConfidenceText}"
+                                       FontFamily="OpenSansSemibold"
+                                       FontAttributes="Bold"
+                                       FontSize="22"
+                                       TextColor="{StaticResource Accent}" />
+                            </Grid>
+                            <ProgressBar Grid.Row="1"
+                                         Progress="{Binding Confidence}"
+                                         ProgressColor="{StaticResource Accent}"
+                                         BackgroundColor="{StaticResource BackgroundSecondary}"
+                                         HeightRequest="6" />
+                            <Label Grid.Row="2"
+                                   Text="Quanto mais perto de 100%, mais certo o app tá de que é o focinho do boi."
+                                   FontSize="11"
+                                   TextColor="{StaticResource TextSecondary}" />
+                        </Grid>
+                    </Border>
+
+                    <!-- Cropped muzzle -->
+                    <Border Style="{StaticResource Card}">
+                        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="14">
+                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                    <Label Text="O FOCINHO"
+                                           Style="{StaticResource SectionLabel}"
+                                           TextColor="{StaticResource Accent}" />
+                                    <Label Text="Foi essa parte que eu reconheci"
+                                           FontFamily="OpenSansSemibold"
+                                           FontAttributes="Bold"
+                                           FontSize="16"
+                                           TextColor="{StaticResource TextPrimary}" />
+                                </VerticalStackLayout>
+                                <Border Grid.Column="1"
+                                        BackgroundColor="{StaticResource AccentSoft}"
+                                        StrokeShape="RoundRectangle 999"
+                                        Padding="12,6">
+                                    <Label Text="{Binding CropConfidenceText}"
+                                           FontFamily="OpenSansSemibold"
+                                           FontAttributes="Bold"
+                                           FontSize="13"
+                                           TextColor="{StaticResource Accent}" />
+                                </Border>
+                            </Grid>
+
+                            <Border Grid.Row="1"
+                                    StrokeShape="RoundRectangle 16"
+                                    BackgroundColor="{StaticResource BackgroundSecondary}"
+                                    Padding="0">
+                                <Image Source="{Binding MuzzleImage}"
+                                       Aspect="AspectFit"
+                                       HeightRequest="220" />
+                            </Border>
+
+                            <Button Grid.Row="2"
+                                    Text="Identificar outro boi"
+                                    Style="{StaticResource OutlineButton}"
+                                    Command="{Binding ResetCommand}" />
+                        </Grid>
+                    </Border>
+
+                    <!-- Passo 3 - Manejo -->
+                    <Label Text="PASSO 3 · MANEJO DESSE BOI"
+                           Style="{StaticResource SectionLabel}"
+                           TextColor="{StaticResource Accent}"
+                           Margin="0,8,0,0" />
+
+                    <Border Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="14">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="O que você vai registrar?"
+                                       FontFamily="OpenSansSemibold"
+                                       FontAttributes="Bold"
+                                       FontSize="16"
+                                       TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="Escolhe a atividade pra anotar nesse animal"
+                                       FontSize="12"
+                                       TextColor="{StaticResource TextSecondary}" />
+                            </VerticalStackLayout>
+
+                            <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto" RowSpacing="10" ColumnSpacing="10">
+                                <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource MutedCard}" Padding="10">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ManejoSoonCommand}" CommandParameter="Vacinar" />
+                                    </Border.GestureRecognizers>
+                                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                        <Label Text="💉" FontSize="22" HorizontalOptions="Center" />
+                                        <Label Text="Vacinar"
+                                               FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="12"
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{StaticResource TextPrimary}" />
+                                        <Label Text="em breve"
+                                               FontSize="9"
+                                               CharacterSpacing="1"
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{StaticResource TextSecondary}" />
+                                    </VerticalStackLayout>
+                                </Border>
+                                <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource MutedCard}" Padding="10">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ManejoSoonCommand}" CommandParameter="Pesar" />
+                                    </Border.GestureRecognizers>
+                                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                        <Label Text="⚖️" FontSize="22" HorizontalOptions="Center" />
+                                        <Label Text="Pesar"
+                                               FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="12"
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{StaticResource TextPrimary}" />
+                                        <Label Text="em breve"
+                                               FontSize="9"
+                                               CharacterSpacing="1"
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{StaticResource TextSecondary}" />
+                                    </VerticalStackLayout>
+                                </Border>
+                                <Border Grid.Row="0" Grid.Column="2" Style="{StaticResource MutedCard}" Padding="10">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ManejoSoonCommand}" CommandParameter="Tratar" />
+                                    </Border.GestureRecognizers>
+                                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                        <Label Text="💊" FontSize="22" HorizontalOptions="Center" />
+                                        <Label Text="Tratar"
+                                               FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="12"
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{StaticResource TextPrimary}" />
+                                        <Label Text="em breve"
+                                               FontSize="9"
+                                               CharacterSpacing="1"
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{StaticResource TextSecondary}" />
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource MutedCard}" Padding="10">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ManejoSoonCommand}" CommandParameter="Mover de lote" />
+                                    </Border.GestureRecognizers>
+                                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                        <Label Text="🚛" FontSize="22" HorizontalOptions="Center" />
+                                        <Label Text="Mover"
+                                               FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="12"
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{StaticResource TextPrimary}" />
+                                        <Label Text="em breve"
+                                               FontSize="9"
+                                               CharacterSpacing="1"
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{StaticResource TextSecondary}" />
+                                    </VerticalStackLayout>
+                                </Border>
+                                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource MutedCard}" Padding="10">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ManejoSoonCommand}" CommandParameter="Anotar ocorrência" />
+                                    </Border.GestureRecognizers>
+                                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                        <Label Text="📝" FontSize="22" HorizontalOptions="Center" />
+                                        <Label Text="Anotar"
+                                               FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="12"
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{StaticResource TextPrimary}" />
+                                        <Label Text="em breve"
+                                               FontSize="9"
+                                               CharacterSpacing="1"
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{StaticResource TextSecondary}" />
+                                    </VerticalStackLayout>
+                                </Border>
+                                <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource MutedCard}" Padding="10">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ManejoSoonCommand}" CommandParameter="Ver ficha" />
+                                    </Border.GestureRecognizers>
+                                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                        <Label Text="📋" FontSize="22" HorizontalOptions="Center" />
+                                        <Label Text="Ficha"
+                                               FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="12"
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{StaticResource TextPrimary}" />
+                                        <Label Text="em breve"
+                                               FontSize="9"
+                                               CharacterSpacing="1"
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{StaticResource TextSecondary}" />
+                                    </VerticalStackLayout>
+                                </Border>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Busy overlay -->
+        <Border IsVisible="{Binding IsBusy}"
+                BackgroundColor="#CCFFFFFF"
+                StrokeShape="Rectangle"
+                Stroke="Transparent">
+            <Border Style="{StaticResource Card}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Padding="28"
+                    WidthRequest="240">
+                <VerticalStackLayout Spacing="14" HorizontalOptions="Center">
+                    <ActivityIndicator IsRunning="True"
+                                       Color="{StaticResource Accent}"
+                                       WidthRequest="42"
+                                       HeightRequest="42" />
+                    <Label Text="{Binding BusyMessage}"
+                           FontFamily="OpenSansSemibold"
+                           FontAttributes="Bold"
+                           FontSize="14"
+                           HorizontalTextAlignment="Center"
+                           TextColor="{StaticResource TextPrimary}" />
+                </VerticalStackLayout>
+            </Border>
+        </Border>
+
+    </Grid>
+
+</ContentPage>

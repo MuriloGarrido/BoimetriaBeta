@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BoimetriaBeta.ViewModels"
+             x:Class="BoimetriaBeta.Views.MainPage"
+             x:DataType="vm:MainViewModel"
+             Title="Início"
+             BackgroundColor="{StaticResource BackgroundPrimary}">
+
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="Auto,*,Auto" Padding="0,0,4,0">
+            <HorizontalStackLayout Grid.Column="0" Spacing="10" VerticalOptions="Center">
+                <Border BackgroundColor="{StaticResource Accent}"
+                        StrokeShape="RoundRectangle 8"
+                        Stroke="Transparent"
+                        WidthRequest="28"
+                        HeightRequest="28">
+                    <Label Text="B"
+                           FontFamily="OpenSansSemibold"
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           TextColor="White"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
+                <Label Text="Boimetria"
+                       FontFamily="OpenSansSemibold"
+                       FontAttributes="Bold"
+                       FontSize="17"
+                       TextColor="{StaticResource TextPrimary}"
+                       VerticalOptions="Center" />
+                <Border Style="{StaticResource BetaChip}" VerticalOptions="Center">
+                    <Label Text="BETA"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="9"
+                           FontAttributes="Bold"
+                           CharacterSpacing="1"
+                           TextColor="White" />
+                </Border>
+            </HorizontalStackLayout>
+        </Grid>
+    </Shell.TitleView>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,8,20,32" Spacing="22">
+
+            <!-- Greeting -->
+            <VerticalStackLayout Spacing="4">
+                <Label Text="{Binding TodayLabel}"
+                       Style="{StaticResource CaptionLabel}"
+                       TextColor="{StaticResource TextSecondary}" />
+                <Label Text="{Binding Greeting}"
+                       FontFamily="OpenSansSemibold"
+                       FontAttributes="Bold"
+                       FontSize="28"
+                       CharacterSpacing="-0.5"
+                       TextColor="{StaticResource TextPrimary}" />
+            </VerticalStackLayout>
+
+            <!-- System status banner -->
+            <Border Style="{StaticResource BorderedCard}" Padding="16">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenSettingsCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                    <Border Grid.Column="0"
+                            Style="{StaticResource IconBadge}"
+                            VerticalOptions="Center">
+                        <Ellipse Fill="{Binding StatusBrush}"
+                                 WidthRequest="14"
+                                 HeightRequest="14"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                        <Label Text="{Binding SystemStatus}"
+                               FontFamily="OpenSansSemibold"
+                               FontAttributes="Bold"
+                               FontSize="14"
+                               TextColor="{StaticResource TextPrimary}" />
+                        <Label Text="{Binding SystemDetail}"
+                               FontSize="12"
+                               TextColor="{StaticResource TextSecondary}"
+                               LineBreakMode="TailTruncation" />
+                    </VerticalStackLayout>
+                    <Border Grid.Column="2"
+                            Background="{Binding StatusBrush}"
+                            StrokeShape="RoundRectangle 6"
+                            Stroke="Transparent"
+                            Padding="8,3"
+                            VerticalOptions="Center">
+                        <Label Text="{Binding StatusBadgeText}"
+                               FontFamily="OpenSansSemibold"
+                               FontSize="9"
+                               FontAttributes="Bold"
+                               CharacterSpacing="2"
+                               TextColor="White" />
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Primary action -->
+            <VerticalStackLayout Spacing="10">
+                <Label Text="MANEJO DO REBANHO" Style="{StaticResource SectionLabel}" />
+
+                <Border x:Name="HeroCard"
+                        StrokeShape="RoundRectangle 22"
+                        Stroke="Transparent"
+                        Padding="0"
+                        HeightRequest="170">
+                    <Border.Shadow>
+                        <Shadow Brush="{StaticResource AccentBrush}" Offset="0,12" Radius="28" Opacity="0.22" />
+                    </Border.Shadow>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenIdentificationCommand}" />
+                    </Border.GestureRecognizers>
+                    <Grid>
+                        <Grid.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#1B5E20" Offset="0.0" />
+                                <GradientStop Color="#0E3A12" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Grid.Background>
+
+                        <Ellipse WidthRequest="160" HeightRequest="160"
+                                 Fill="White" Opacity="0.05"
+                                 HorizontalOptions="End" VerticalOptions="Start"
+                                 TranslationX="40" TranslationY="-60" />
+                        <Ellipse WidthRequest="100" HeightRequest="100"
+                                 Fill="White" Opacity="0.07"
+                                 HorizontalOptions="End" VerticalOptions="End"
+                                 TranslationX="20" TranslationY="30" />
+
+                        <Grid Padding="22" RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,Auto">
+                            <Label Grid.Row="0" Grid.Column="0"
+                                   Text="COMEÇA AQUI"
+                                   FontFamily="OpenSansSemibold"
+                                   FontSize="9"
+                                   FontAttributes="Bold"
+                                   CharacterSpacing="2"
+                                   TextColor="#A8D5AA" />
+                            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                   Text="Identificar boi por foto"
+                                   FontFamily="OpenSansSemibold"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="White"
+                                   VerticalOptions="End"
+                                   LineHeight="1.1"
+                                   Margin="0,10,0,0" />
+                            <Label Grid.Row="2" Grid.Column="0"
+                                   Text="Reconhece pelo focinho · sem brinco e sem ferro"
+                                   FontSize="12"
+                                   TextColor="#CDE5CF"
+                                   VerticalOptions="Center"
+                                   Margin="0,8,0,0" />
+                            <Border Grid.Row="2" Grid.Column="1"
+                                    BackgroundColor="White"
+                                    StrokeShape="RoundRectangle 999"
+                                    WidthRequest="38"
+                                    HeightRequest="38"
+                                    Margin="0,8,0,0">
+                                <Label Text="→"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource Accent}"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Atalhos secundários -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Border Grid.Column="0" Style="{StaticResource BorderedCard}" Padding="16">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenReportsCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="8">
+                        <Border Style="{StaticResource IconBadge}" HorizontalOptions="Start">
+                            <Label Text="📊" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Text="Relatórios"
+                               FontFamily="OpenSansSemibold"
+                               FontAttributes="Bold"
+                               FontSize="14"
+                               TextColor="{StaticResource TextPrimary}" />
+                        <Label Text="Vacinação, pesagem, tratamentos"
+                               FontSize="11"
+                               TextColor="{StaticResource TextSecondary}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource BorderedCard}" Padding="16">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenSettingsCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="8">
+                        <Border Style="{StaticResource IconBadge}" HorizontalOptions="Start">
+                            <Label Text="⚙️" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Text="Ajustes"
+                               FontFamily="OpenSansSemibold"
+                               FontAttributes="Bold"
+                               FontSize="14"
+                               TextColor="{StaticResource TextPrimary}" />
+                        <Label Text="Preparar e configurar o app"
+                               FontSize="11"
+                               TextColor="{StaticResource TextSecondary}" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Tarefas do dia -->
+            <VerticalStackLayout Spacing="10">
+                <Label Text="TAREFAS DO DIA" Style="{StaticResource SectionLabel}" />
+                <Border Style="{StaticResource BorderedCard}" Padding="22">
+                    <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                        <Border BackgroundColor="{StaticResource AccentSoft}"
+                                StrokeShape="RoundRectangle 999"
+                                WidthRequest="48"
+                                HeightRequest="48"
+                                HorizontalOptions="Center">
+                            <Label Text="✓"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource Accent}"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+                        <Label Text="Sem pendência por hoje"
+                               FontFamily="OpenSansSemibold"
+                               FontAttributes="Bold"
+                               FontSize="14"
+                               HorizontalTextAlignment="Center"
+                               TextColor="{StaticResource TextPrimary}" />
+                        <Label Text="Quando os módulos de vacinação e pesagem estiverem ativos, as tarefas dos boi aparecem aqui."
+                               FontSize="12"
+                               HorizontalTextAlignment="Center"
+                               TextColor="{StaticResource TextSecondary}" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Módulos de manejo -->
+            <VerticalStackLayout Spacing="10">
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Grid.Column="0" Text="MÓDULOS DE MANEJO" Style="{StaticResource SectionLabel}" />
+                    <Label Grid.Column="1" Text="VEM AÍ" Style="{StaticResource SectionLabel}" TextColor="{StaticResource Accent}" />
+                </Grid>
+
+                <Border Style="{StaticResource BorderedCard}" Padding="6">
+                    <VerticalStackLayout Spacing="0">
+
+                        <Grid Padding="12" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ManejoSoonCommand}" CommandParameter="Cadastro do rebanho" />
+                            </Grid.GestureRecognizers>
+                            <Border Grid.Column="0" Style="{StaticResource IconBadge}">
+                                <Label Text="🐄" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Cadastro do rebanho"
+                                       FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="14"
+                                       TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="Lista de boi, lotes e pastos"
+                                       FontSize="11" TextColor="{StaticResource TextSecondary}" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="2" Style="{StaticResource ComingSoonChip}" VerticalOptions="Center">
+                                <Label Text="EM BREVE"
+                                       FontFamily="OpenSansSemibold" FontSize="9" FontAttributes="Bold"
+                                       CharacterSpacing="2" TextColor="{StaticResource TextSecondary}" />
+                            </Border>
+                        </Grid>
+                        <BoxView HeightRequest="1" Color="{StaticResource Divider}" Margin="12,0" />
+
+                        <Grid Padding="12" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ManejoSoonCommand}" CommandParameter="Vacinação e tratamentos" />
+                            </Grid.GestureRecognizers>
+                            <Border Grid.Column="0" Style="{StaticResource IconBadge}">
+                                <Label Text="💉" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Vacinação e tratamentos"
+                                       FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="14"
+                                       TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="Anota o que aplicou em cada boi"
+                                       FontSize="11" TextColor="{StaticResource TextSecondary}" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="2" Style="{StaticResource ComingSoonChip}" VerticalOptions="Center">
+                                <Label Text="EM BREVE"
+                                       FontFamily="OpenSansSemibold" FontSize="9" FontAttributes="Bold"
+                                       CharacterSpacing="2" TextColor="{StaticResource TextSecondary}" />
+                            </Border>
+                        </Grid>
+                        <BoxView HeightRequest="1" Color="{StaticResource Divider}" Margin="12,0" />
+
+                        <Grid Padding="12" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ManejoSoonCommand}" CommandParameter="Pesagem e ganho de peso" />
+                            </Grid.GestureRecognizers>
+                            <Border Grid.Column="0" Style="{StaticResource IconBadge}">
+                                <Label Text="⚖️" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Pesagem e ganho de peso"
+                                       FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="14"
+                                       TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="Acompanha a engorda mês a mês"
+                                       FontSize="11" TextColor="{StaticResource TextSecondary}" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="2" Style="{StaticResource ComingSoonChip}" VerticalOptions="Center">
+                                <Label Text="EM BREVE"
+                                       FontFamily="OpenSansSemibold" FontSize="9" FontAttributes="Bold"
+                                       CharacterSpacing="2" TextColor="{StaticResource TextSecondary}" />
+                            </Border>
+                        </Grid>
+                        <BoxView HeightRequest="1" Color="{StaticResource Divider}" Margin="12,0" />
+
+                        <Grid Padding="12" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ManejoSoonCommand}" CommandParameter="Movimentação entre lotes" />
+                            </Grid.GestureRecognizers>
+                            <Border Grid.Column="0" Style="{StaticResource IconBadge}">
+                                <Label Text="🚛" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Movimentação entre lotes"
+                                       FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="14"
+                                       TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="Entrada, saída e troca de pasto"
+                                       FontSize="11" TextColor="{StaticResource TextSecondary}" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="2" Style="{StaticResource ComingSoonChip}" VerticalOptions="Center">
+                                <Label Text="EM BREVE"
+                                       FontFamily="OpenSansSemibold" FontSize="9" FontAttributes="Bold"
+                                       CharacterSpacing="2" TextColor="{StaticResource TextSecondary}" />
+                            </Border>
+                        </Grid>
+                        <BoxView HeightRequest="1" Color="{StaticResource Divider}" Margin="12,0" />
+
+                        <Grid Padding="12" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ManejoSoonCommand}" CommandParameter="Reprodução e prenhez" />
+                            </Grid.GestureRecognizers>
+                            <Border Grid.Column="0" Style="{StaticResource IconBadge}">
+                                <Label Text="🍼" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Reprodução e prenhez"
+                                       FontFamily="OpenSansSemibold" FontAttributes="Bold" FontSize="14"
+                                       TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="Cobertura, parto e bezerro novo"
+                                       FontSize="11" TextColor="{StaticResource TextSecondary}" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="2" Style="{StaticResource ComingSoonChip}" VerticalOptions="Center">
+                                <Label Text="EM BREVE"
+                                       FontFamily="OpenSansSemibold" FontSize="9" FontAttributes="Bold"
+                                       CharacterSpacing="2" TextColor="{StaticResource TextSecondary}" />
+                            </Border>
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Números do rebanho -->
+            <VerticalStackLayout Spacing="10">
+                <Label Text="NÚMEROS DO REBANHO" Style="{StaticResource SectionLabel}" />
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                    <Border Grid.Column="0" Style="{StaticResource BorderedCard}" Padding="14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="0" Style="{StaticResource MetricValue}" />
+                            <Label Text="Animais cadastrados" Style="{StaticResource MetricLabel}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Column="1" Style="{StaticResource BorderedCard}" Padding="14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="0" Style="{StaticResource MetricValue}" />
+                            <Label Text="Manejos no mês" Style="{StaticResource MetricLabel}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Column="2" Style="{StaticResource BorderedCard}" Padding="14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="0" Style="{StaticResource MetricValue}" />
+                            <Label Text="Pendências" Style="{StaticResource MetricLabel}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- Footer -->
+            <Grid Padding="0,10,0,0" ColumnDefinitions="*,Auto">
+                <Label Grid.Column="0"
+                       Text="Boimetria · manejo do rebanho pelo focinho"
+                       FontSize="10"
+                       TextColor="{StaticResource TextSecondary}"
+                       VerticalOptions="Center" />
+                <Label Grid.Column="1"
+                       Text="{Binding AppVersion}"
+                       FontFamily="OpenSansSemibold"
+                       FontSize="10"
+                       TextColor="{StaticResource TextSecondary}"
+                       VerticalOptions="Center" />
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
